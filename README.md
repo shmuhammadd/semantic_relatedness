@@ -45,3 +45,17 @@ The output is a CSV file named `output.csv` containing pairs of semantically rel
 ## Note
 
 The stopwords file should be in CSV or TXT format. If it is a CSV file, it should have a column named 'stopwords' containing the stopwords. If it is a TXT file, it should contain one stopword per line.
+
+## Data Sources
+
+The following table provides number of sentence-pair and domain for different languages:
+
+| Language | Twitter | News | Facebook |
+|----------|---------|------|----------|
+| Hausa  | 1000    | 2000 | 1500     |
+|        |         |         |      |
+|        |      |  |      |
+
+The numbers represent the number of sentence pairs generated from each source.
+![image](https://github.com/shmuhammad2004/semantic_relatedness/assets/38854463/f34611b6-3e0c-4bbf-83de-ae8cec18dbe6)
+
