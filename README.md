@@ -1,6 +1,6 @@
 # Semantic Relatedness Finder
 
-This Python project is designed to find semantically related sentences in a given text. It uses lexical overlap as a measure of semantic relatedness. The script can be customized to remove stopwords, clean sentences by removing special characters, and limit the number of matches per sentence.
+This Python script find semantically related sentences in a given text. It uses lexical overlap as a measure of semantic relatedness. The script can be customized to remove stopwords, clean sentences by removing special characters, and limit the number of matches per sentence.
 
 ## Features
 
