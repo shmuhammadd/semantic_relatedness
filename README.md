@@ -52,6 +52,6 @@ The following table provides number of sentence-pair and domain for different la
 
 | Language | Twitter | News | Facebook |
 |----------|---------|------|----------|
-| Hausa  | 1000    | 2000 | 1500     |
+| Hausa  |             |   |       |
 |        |         |         |      |
 |        |         |         |      |
