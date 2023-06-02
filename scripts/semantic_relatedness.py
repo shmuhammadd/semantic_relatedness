@@ -68,7 +68,7 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
         if 5 <= len(sentence2.split()) <= 25:
 
             # Check overlap if neither sentence has appeared more than twice
-            if sentence_counts[sentence1] < 2 and sentence_counts[sentence2] < 2:
+            if sentence_counts[sentences[i]] < 2 and sentence_counts[sentences[j]] < 2:
               words1 = set(sentence1.split())
               words2 = set(sentence2.split())
 
