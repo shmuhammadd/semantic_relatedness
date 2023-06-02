@@ -29,7 +29,7 @@ def clean_sentence(sentence):
   sentence = ''.join(c for c in sentence if ord(c) < 128)
   return sentence
 
-def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sentences=False):
+def find_lexical_overlap(text, stopwords_file, maximum_matches, remove_stopwords=False, clean_sentences=False):
 
   # Split the text into sentences
   sentences = text.splitlines()
@@ -71,7 +71,7 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
         if 5 <= len(sentence2.split()) <= 25:
 
             # Check overlap if neither sentence has appeared more than twice
-            if sentence_counts[sentences[i]] < 2 and sentence_counts[sentences[j]] < 2:
+            if sentence_counts[sentences[i]] < maximum_matches and sentence_counts[sentences[j]] < maximum_matches:
               words1 = set(sentence1.split())
               words2 = set(sentence2.split())
 
@@ -102,9 +102,10 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
   return sentence_pairs
 
 parser = argparse.ArgumentParser(description='Crawl articles from Premium Times Hausa website.')
-parser.add_argument('-i', '--input', required=True, help='file containing the sentences.')
-parser.add_argument('-s', '--stopwords', help="stopwords file. required if '--remove_stopwords' option is used.")
-parser.add_argument('-o', '--output', default='', help='path to save the semantically-related sentences.')
+parser.add_argument('-i', '--input', required=True, type=str, help='file containing the sentences.')
+parser.add_argument('-s', '--stopwords', type=str, help="stopwords file. required if '--remove_stopwords' option is used.")
+parser.add_argument('-o', '--output', default='', type=str, help='path to save the semantically-related sentences.')
+parser.add_argument('-m', '--maximum_matches', default=2, type=int, help='maximum number of matches per sentence.')
 parser.add_argument('--remove_stopwords', action='store_true', help='use to remove stopwords.')
 parser.add_argument('--clean_sentences', action='store_true', help='use to remove special characters.')
 
@@ -122,10 +123,10 @@ if not os.path.exists(args.output):
 with open(args.input, 'r') as file:
   text = file.read()
 
-s_p = find_lexical_overlap(text, args.stopwords, args.remove_stopwords, args.clean_sentences)
+s_p = find_lexical_overlap(text, args.stopwords, args.maximum_matches, args.remove_stopwords, args.clean_sentences)
 df = pd.DataFrame(s_p, columns=["Sentence 1", "Sentence 2"])
 
 # Save the semantically-related sentences
 df.to_csv(os.path.join(args.output, 'output.csv'), index=False)
 
-print('Saved the semantically-related sentences to', os.path.join(args.output, 'output.csv'), 'successfully.')
+print('Saved the semantically-related sentences to', os.path.join(args.output, 'output.tsv'), 'successfully.')
