@@ -19,6 +19,9 @@ def load_stopwords(stopwords_file):
     sys.exit(-1)
   return stopwords
 
+def remove_tabs(text):
+  return text.replace('\t', '')
+
 def clean_sentence(sentence):
   # Lowercase the sentence
   sentence = sentence.lower()
@@ -29,7 +32,7 @@ def clean_sentence(sentence):
 def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sentences=False):
 
   # Split the text into sentences
-  sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', text)
+  sentences = text.splitlines()
 
   # Load stopwords from CSV file
   if remove_stopwords:
@@ -60,7 +63,7 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
         else:
           sentence2 = sentences[j]
 
-        if sentence1.lower() == sentence2.lower():
+        if sentences[i].lower() == sentences[j].lower():
           print('Sentences', i, 'and', j, 'are the same, skipping...')
           continue
 
@@ -96,9 +99,7 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
 
     print()
 
-  df = pd.DataFrame(sentence_pairs, columns=["Sentence 1", "Sentence 2"])
-
-  return df
+  return sentence_pairs
 
 parser = argparse.ArgumentParser(description='Crawl articles from Premium Times Hausa website.')
 parser.add_argument('-i', '--input', required=True, help='file containing the sentences.')
@@ -121,9 +122,10 @@ if not os.path.exists(args.output):
 with open(args.input, 'r') as file:
   text = file.read()
 
-df = find_lexical_overlap(text, args.stopwords, args.remove_stopwords, args.clean_sentences)
+s_p = find_lexical_overlap(text, args.stopwords, args.remove_stopwords, args.clean_sentences)
+df = pd.DataFrame(s_p, columns=["Sentence 1", "Sentence 2"])
 
 # Save the semantically-related sentences
-df.to_csv(os.path.join(args.output, 'output.tsv'), sep='\t', index=False)
+df.to_csv(os.path.join(args.output, 'output.csv'), index=False)
 
-print('Saved the semantically-related sentences to', os.path.join(args.output, 'output.tsv'), 'successfully.')
+print('Saved the semantically-related sentences to', os.path.join(args.output, 'output.csv'), 'successfully.')
