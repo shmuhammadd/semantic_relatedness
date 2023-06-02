@@ -54,8 +54,4 @@ The following table provides number of sentence-pair and domain for different la
 |----------|---------|------|----------|
 | Hausa  | 1000    | 2000 | 1500     |
 |        |         |         |      |
-|        |      |  |      |
-
-The numbers represent the number of sentence pairs generated from each source.
-![image](https://github.com/shmuhammad2004/semantic_relatedness/assets/38854463/f34611b6-3e0c-4bbf-83de-ae8cec18dbe6)
-
+|        |         |         |      |
