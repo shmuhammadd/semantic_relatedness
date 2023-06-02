@@ -43,6 +43,9 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
 
   # Iterate over sentences to find pairs with lexical overlap
   for i in range(len(sentences)):
+    related = []
+    selected = []
+    print('Sentence', i + 1)
     if clean_sentences:
       sentence1 = clean_sentence(sentences[i])
     else:
@@ -51,10 +54,15 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
     # Check if sentence length is between 5 and 25 words
     if 5 <= len(sentence1.split()) <= 25:
       for j in range(i+1, len(sentences)):
+
         if clean_sentences:
           sentence2 = clean_sentence(sentences[j])
         else:
           sentence2 = sentences[j]
+
+        if sentence1.lower() == sentence2.lower():
+          print('Sentences', i, 'and', j, 'are the same, skipping...')
+          continue
 
         # Check if sentence length is between 5 and 25 words
         if 5 <= len(sentence2.split()) <= 25:
@@ -69,6 +77,7 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
           overlap = words1.intersection(words2)
 
           if len(overlap) >= 5:  # Choose the lexical overlap
+            related.append(j)
 
             # Only add pair if neither sentence has appeared more than twice
             if sentence_counts[sentence1] < 2 and sentence_counts[sentence2] < 2:
@@ -77,6 +86,18 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
               # Increase count for each sentence
               sentence_counts[sentence1] += 1
               sentence_counts[sentence2] += 1
+              selected.append(j)
+
+      if related:
+        print('\tRelated:', related)
+        if selected:
+          print('\tSelected:', selected)
+      else:
+        print('\tRelated: None\nSelected: None')
+    else:
+      print('\tShort sentence.')
+
+    print()
 
   df = pd.DataFrame(sentence_pairs, columns=["Sentence 1", "Sentence 2"])
 
