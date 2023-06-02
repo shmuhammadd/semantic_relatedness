@@ -96,8 +96,8 @@ if args.remove_stopwords:
     print("Stopwords file not found.")
     sys.exit(-1)
 
-if not os.path.exists(args.input):
-  os.makedirs(args.input)
+if not os.path.exists(args.output):
+  os.makedirs(args.output)
 
 # Read the text file
 with open(args.input, 'r') as file:
