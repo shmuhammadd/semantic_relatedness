@@ -44,6 +44,7 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
   # Iterate over sentences to find pairs with lexical overlap
   for i in range(len(sentences)):
     related = []
+    selected = []
     print('Sentence', i + 1)
     if clean_sentences:
       sentence1 = clean_sentence(sentences[i])
@@ -79,11 +80,11 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
               overlap = words1.intersection(words2)
 
               if len(overlap) >= 5:  # Choose the lexical overlap
-                sentence_pairs.append((sentence1, sentence2))
+                sentence_pairs.append((sentences[i], sentences[j]))
                 
                 # Increase count for each sentence
-                sentence_counts[sentence1] += 1
-                sentence_counts[sentence2] += 1
+                sentence_counts[sentences[i]] += 1
+                sentence_counts[sentences[j]] += 1
                 related.append(j)
 
       if related:
