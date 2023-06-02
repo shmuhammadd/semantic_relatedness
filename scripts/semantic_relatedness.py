@@ -44,7 +44,6 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
   # Iterate over sentences to find pairs with lexical overlap
   for i in range(len(sentences)):
     related = []
-    selected = []
     print('Sentence', i + 1)
     if clean_sentences:
       sentence1 = clean_sentence(sentences[i])
@@ -66,34 +65,31 @@ def find_lexical_overlap(text, stopwords_file, remove_stopwords=False, clean_sen
 
         # Check if sentence length is between 5 and 25 words
         if 5 <= len(sentence2.split()) <= 25:
-          words1 = set(sentence1.split())
-          words2 = set(sentence2.split())
 
-          # Remove stopwords from words
-          if remove_stopwords:
-            words1 = words1.difference(stopwords)
-            words2 = words2.difference(stopwords)
-          
-          overlap = words1.intersection(words2)
-
-          if len(overlap) >= 5:  # Choose the lexical overlap
-            related.append(j)
-
-            # Only add pair if neither sentence has appeared more than twice
+            # Check overlap if neither sentence has appeared more than twice
             if sentence_counts[sentence1] < 2 and sentence_counts[sentence2] < 2:
-              sentence_pairs.append((sentence1, sentence2))
+              words1 = set(sentence1.split())
+              words2 = set(sentence2.split())
+
+              # Remove stopwords from words
+              if remove_stopwords:
+                words1 = words1.difference(stopwords)
+                words2 = words2.difference(stopwords)
               
-              # Increase count for each sentence
-              sentence_counts[sentence1] += 1
-              sentence_counts[sentence2] += 1
-              selected.append(j)
+              overlap = words1.intersection(words2)
+
+              if len(overlap) >= 5:  # Choose the lexical overlap
+                sentence_pairs.append((sentence1, sentence2))
+                
+                # Increase count for each sentence
+                sentence_counts[sentence1] += 1
+                sentence_counts[sentence2] += 1
+                related.append(j)
 
       if related:
         print('\tRelated:', related)
-        if selected:
-          print('\tSelected:', selected)
       else:
-        print('\tRelated: None\nSelected: None')
+        print('\tRelated: None')
     else:
       print('\tShort sentence.')
 
