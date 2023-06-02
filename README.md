@@ -53,5 +53,7 @@ The following table provides number of sentence-pair and domain for different la
 | Language | Twitter | News | Facebook |
 |----------|---------|------|----------|
 | Hausa  |             |   |       |
-|        |         |         |      |
-|        |         |         |      |
+| Yoruba       |         |         |      |
+| Igbo       |         |         |      |
+| -       |         |         |      |
+
