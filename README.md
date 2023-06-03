@@ -46,7 +46,7 @@ The output is a CSV file named `output.csv` containing pairs of semantically rel
 
 The stopwords file should be in CSV or TXT format. If it is a CSV file, it should have a column named 'stopwords' containing the stopwords. If it is a TXT file, it should contain one stopword per line.
 
-## Data Sources
+## Semantic Relatedness Dataset 
 
 The following table provides number of sentence-pair and domain for different languages:
 
