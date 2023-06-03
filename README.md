@@ -48,12 +48,18 @@ The stopwords file should be in CSV or TXT format. If it is a CSV file, it shoul
 
 ## Semantic Relatedness Dataset 
 
-The following table provides number of sentence-pair and domain for different languages:
+The following table provides number of Relatedness sentence-pair and domain for different languages:
 
 | Language | Twitter | News | Facebook |
 |----------|---------|------|----------|
 | Hausa  |             |   |       |
 | Yoruba       |         |         |      |
 | Igbo       |         |         |      |
-| -       |         |         |      |
+| Kinyarwanda        |         |         |      |
+| Darija        |         |         |      |
+| Swahili        |         |         |      |
+| Oromo        |         |         |      |
+| Amharic        |         |         |      |
+
+
 
