@@ -1,6 +1,6 @@
 # Semantic Relatedness Finder
 
-This Python project is designed to find semantically related sentences in a given text. It uses lexical overlap as a measure of semantic relatedness. The script can be customized to remove stopwords, clean sentences by removing special characters, and limit the number of matches per sentence.
+This Python script find semantically related sentences in a given text. It uses lexical overlap as a measure of semantic relatedness. The script can be customized to remove stopwords, clean sentences by removing special characters, and limit the number of matches per sentence.
 
 ## Features
 
@@ -45,3 +45,15 @@ The output is a CSV file named `output.csv` containing pairs of semantically rel
 ## Note
 
 The stopwords file should be in CSV or TXT format. If it is a CSV file, it should have a column named 'stopwords' containing the stopwords. If it is a TXT file, it should contain one stopword per line.
+
+## Data Sources
+
+The following table provides number of sentence-pair and domain for different languages:
+
+| Language | Twitter | News | Facebook |
+|----------|---------|------|----------|
+| Hausa  |             |   |       |
+| Yoruba       |         |         |      |
+| Igbo       |         |         |      |
+| -       |         |         |      |
+
