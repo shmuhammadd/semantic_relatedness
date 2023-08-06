@@ -3,7 +3,7 @@ import pandas as pd
 import argparse
 
 parser = argparse.ArgumentParser(description='Create annotation samples for Label Studio.')
-parser.add_argument('tuples', required=True, type=str, help='tsv file containing the tuples.')
+parser.add_argument('-i', '--tuples', required=True, type=str, help='tsv file containing the tuples.')
 parser.add_argument('-o', '--output', default='', type=str, help='output path for the annotation samples.')
 
 args = parser.parse_args()
@@ -17,9 +17,10 @@ if not os.path.exists(output_path):
 
 # ensure that the input file exists and is a tsv file
 assert os.path.exists(tuples), 'Input file does not exist.'
-assert tuples.endswith('.tsv'), 'Input file must be a tsv file.'
 
 # read the tuples
 df = pd.read_csv(tuples, sep='\t', header=None, names=col_names)
 
-df.to_csv(os.path.join(output_path, 'annotation_samples.csv'), sep='\t', index=False)
+df.to_csv(os.path.join(output_path, 'label_studio_annotation_samples.tsv'), sep='\t', index=False)
+
+print('samples saved to:', os.path.join(output_path, 'label_studio_annotation_samples.tsv'))
