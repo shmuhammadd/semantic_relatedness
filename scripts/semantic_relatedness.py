@@ -3,7 +3,6 @@ import os
 import sys
 import pandas as pd
 from collections import defaultdict
-import string
 
 import argparse
 
