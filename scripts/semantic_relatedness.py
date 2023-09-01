@@ -43,41 +43,45 @@ def find_lexical_overlap(text, stopwords_file, maximum_matches, remove_stopwords
   # Dictionary to store sentence occurrence count
   sentence_counts = defaultdict(int)
 
+  # preprocess cleaning sentences
+  if clean_sentences:
+    sentences_cleaned = [clean_sentence(sentence) for sentence in sentences]
+  else:
+    sentences_cleaned = sentences
+  
+  # preprocess getting set of words
+  if remove_stopwords:
+    sentences_words = [set(sentence.split()).difference(stopwords) for sentence in sentences_cleaned]
+  else:
+    sentences_words = [set(sentence.split()) for sentence in sentences_cleaned]
+
+  # preprocess computing sentence length
+  sentence_length = [len(sentence.split()) for sentence in sentences_cleaned]
+
   # Iterate over sentences to find pairs with lexical overlap
   for i in range(len(sentences)):
     related = []
     selected = []
     print('Sentence', i + 1)
-    if clean_sentences:
-      sentence1 = clean_sentence(sentences[i])
-    else:
-      sentence1 = sentences[i]
+    sentence1 = sentences_cleaned[i]
 
     # Check if sentence length is between 5 and 25 words
-    if 5 <= len(sentence1.split()) <= 25:
+    if 5 <= sentence_length[i] <= 25:
       for j in range(i+1, len(sentences)):
 
-        if clean_sentences:
-          sentence2 = clean_sentence(sentences[j])
-        else:
-          sentence2 = sentences[j]
+        sentence2 = sentences_cleaned[j]
 
         if sentences[i].lower() == sentences[j].lower():
           print('Sentences', i, 'and', j, 'are the same, skipping...')
           continue
 
         # Check if sentence length is between 5 and 25 words
-        if 5 <= len(sentence2.split()) <= 25:
+        if 5 <= sentence_length[j] <= 25:
 
             # Check overlap if neither sentence has appeared more than twice
             if sentence_counts[sentences[i]] < maximum_matches and sentence_counts[sentences[j]] < maximum_matches:
-              words1 = set(sentence1.split())
-              words2 = set(sentence2.split())
-
-              # Remove stopwords from words
-              if remove_stopwords:
-                words1 = words1.difference(stopwords)
-                words2 = words2.difference(stopwords)
+              words1 = sentences_words[i]
+              words2 = sentences_words[j]
               
               overlap = words1.intersection(words2)
 
@@ -128,4 +132,4 @@ df = pd.DataFrame(s_p, columns=["Sentence 1", "Sentence 2"])
 # Save the semantically-related sentences
 df.to_csv(os.path.join(args.output, 'output.csv'), index=False)
 
-print('Saved the semantically-related sentences to', os.path.join(args.output, 'output.tsv'), 'successfully.')
+print('Saved the semantically-related sentences to', os.path.join(args.output, 'output.csv'), 'successfully.')
